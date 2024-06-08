@@ -50,6 +50,7 @@ MODULE GLOBAL
 ! PHYSICAL DOMAIN VARIABLES
     INTEGER :: Mglob,Nglob,Mloc,Nloc,Mloc1,Nloc1
     INTEGER, PARAMETER :: Nghost = 3
+    ! Indices for the true beginning, true end, and first ghost cells 
     INTEGER :: Ibeg,Iend,Jbeg,Jend,Iend1,Jend1
     REAL(SP):: DX,DY
     ! Wavemaker Coordinates
