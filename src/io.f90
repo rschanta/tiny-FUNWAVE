@@ -7,6 +7,7 @@ SUBROUTINE OUTPUT
     USE GLOBAL
     IMPLICIT NONE
 
+      ! Update screen
       SCREEN_COUNT=SCREEN_COUNT+DT
 
       ! Calculate statistics to display

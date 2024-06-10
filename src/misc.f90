@@ -194,6 +194,7 @@ SUBROUTINE ESTIMATE_DT(M,N,DX,DY,U,V,H,MinDepthFrc,DT,CFL,TIME)
         DO I=1,M
             ! x direction
             TMP1=ABS(U(I,J))+SQRT(GRAV*MAX(H(I,J),MinDepthFrc))
+            ! Prevent division by 0
             IF(TMP1<SMALL)THEN
                 TMP2=DX/SMALL
             ELSE

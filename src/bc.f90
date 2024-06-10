@@ -6,12 +6,10 @@ SUBROUTINE BOUNDARY_CONDITION
 
 ! DEAL WITH THE EDGES OF THE DOMAIN FIRSt
 
-! WEST SIDE: Process that only occurs on the west side
+! WESTERN EDGE
 #   if defined (PARALLEL)
         if ( n_west .eq. MPI_PROC_NULL ) then
 #   endif
-
-
   IF(WaveMaker(1:3)=='ABS'.OR.WaveMaker(1:11)=='LEFT_BC_IRR')THEN
     ! do nothing
   ELSE
@@ -29,7 +27,7 @@ SUBROUTINE BOUNDARY_CONDITION
      endif
 # endif
 
-
+! EASTERN EDGE
 # if defined (PARALLEL)
        if ( n_east .eq. MPI_PROC_NULL ) then
 # endif
@@ -55,28 +53,11 @@ SUBROUTINE BOUNDARY_CONDITION
   ELSE
 # endif
 
+! SOUTHERN EDGE
 # if defined (PARALLEL)
      if ( n_suth .eq. MPI_PROC_NULL ) then
 # endif
 
-# if defined (COUPLING)
-  IF(IN_DOMAIN_SOUTH)THEN
-    DO I=Ibeg,Kstart_SOUTH-1
-     Q(I,Jbeg)=ZERO
-     Fy(I,Jbeg)=ZERO
-     Xi=EtaRyR(I,Jbeg)
-     Deps=Depthy(I,Jbeg)
-     Gy(I,Jbeg)=0.5_SP*GRAV*(Xi*Xi*Gamma3+2.0_SP*Xi*Deps)
-    ENDDO
-    DO I=Kend_SOUTH+1,Iend
-     Q(I,Jbeg)=ZERO
-     Fy(I,Jbeg)=ZERO
-     Xi=EtaRyR(I,Jbeg)
-     Deps=Depthy(I,Jbeg)
-     Gy(I,Jbeg)=0.5_SP*GRAV*(Xi*Xi*Gamma3+2.0_SP*Xi*Deps)
-    ENDDO
-  ENDIF
-# else
     DO I=Ibeg,Iend
      Q(I,Jbeg)=ZERO
      Fy(I,Jbeg)=ZERO
@@ -84,32 +65,16 @@ SUBROUTINE BOUNDARY_CONDITION
      Deps=Depthy(I,Jbeg)
      Gy(I,Jbeg)=0.5_SP*GRAV*(Xi*Xi*Gamma3+2.0_SP*Xi*Deps)
      ENDDO
-# endif  
 
 # if defined (PARALLEL)
      endif
 # endif
+
+! NORTHERN EDGE
 # if defined (PARALLEL)
      if ( n_nrth .eq. MPI_PROC_NULL ) then
 # endif
-# if defined (COUPLING)
-  IF(IN_DOMAIN_NORTH)THEN
-    DO I=Ibeg,Kstart_NORTH-1
-     Q(I,Jend1)=ZERO
-     Fy(I,Jend1)=ZERO
-     Xi=EtaRyL(I,Jend1)
-     Deps=Depthy(I,Jend1)
-     Gy(I,Jend1)=0.5_SP*GRAV*(Xi*Xi*Gamma3+2.0_SP*Xi*Deps)
-    ENDDO
-    DO I=Kend_NORTH+1,Iend
-     Q(I,Jend1)=ZERO
-     Fy(I,Jend1)=ZERO
-     Xi=EtaRyL(I,Jend1)
-     Deps=Depthy(I,Jend1)
-     Gy(I,Jend1)=0.5_SP*GRAV*(Xi*Xi*Gamma3+2.0_SP*Xi*Deps)
-    ENDDO
-  ENDIF
-# else
+
     DO I=Ibeg,Iend
      Q(I,Jend1)=ZERO
      Fy(I,Jend1)=ZERO
@@ -117,7 +82,7 @@ SUBROUTINE BOUNDARY_CONDITION
      Deps=Depthy(I,Jend1)
      Gy(I,Jend1)=0.5_SP*GRAV*(Xi*Xi*Gamma3+2.0_SP*Xi*Deps)
     ENDDO
-# endif 
+
 # if defined (PARALLEL)
     endif
 # endif
